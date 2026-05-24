@@ -1,10 +1,13 @@
 ---
+import { DatabaseZap, Network, Workflow, FlaskConical, Layers, Zap, Globe } from "lucide-react";
+
 const BASE = "https://svgl.app/library";
 
 interface TechItem {
   label: string;
   iconLight?: string;
   iconDark?: string;
+  lucideIcon?: typeof DatabaseZap;
 }
 
 interface Category {
@@ -20,7 +23,12 @@ const categories: Category[] = [
       { label: ".NET Core", iconLight: `${BASE}/dotnet.svg` },
       { label: ".NET Framework", iconLight: `${BASE}/dotnet.svg` },
       { label: "Entity Framework", iconLight: `${BASE}/dotnet.svg` },
-      { label: "CQRS" },
+      { label: "CQRS", lucideIcon: DatabaseZap },
+      { label: "Dapper", lucideIcon: Layers },
+      { label: "Node.js", iconLight: `${BASE}/nodejs.svg` },
+      { label: "Express.js", lucideIcon: Zap },
+      { label: "xUnit", lucideIcon: FlaskConical },
+      { label: "nUnit", lucideIcon: FlaskConical },
     ],
   },
   {
@@ -32,6 +40,12 @@ const categories: Category[] = [
         iconDark: `${BASE}/react_dark.svg`,
       },
       { label: "TypeScript", iconLight: `${BASE}/typescript.svg` },
+      {
+        label: "Next.js",
+        iconLight: `${BASE}/nextjs_light.svg`,
+        iconDark: `${BASE}/nextjs_dark.svg`,
+      },
+      { label: "Vue.js", iconLight: `${BASE}/vue.svg` },
     ],
   },
   {
@@ -40,15 +54,18 @@ const categories: Category[] = [
       { label: "Azure", iconLight: `${BASE}/azure.svg` },
       { label: "Azure Functions", iconLight: `${BASE}/azure.svg` },
       { label: "Azure Service Bus", iconLight: `${BASE}/azure.svg` },
-      { label: "Microservices" },
+      { label: "Cosmos DB", lucideIcon: Globe },
+      { label: "GitHub Actions", iconLight: `${BASE}/github-actions.svg` },
+      { label: "Microservices", lucideIcon: Network },
     ],
   },
   {
     name: "Data & Infra",
     items: [
       { label: "SQL Server", iconLight: `${BASE}/sql-server.svg` },
+      { label: "PostgreSQL", iconLight: `${BASE}/postgresql.svg` },
       { label: "Redis", iconLight: `${BASE}/redis.svg` },
-      { label: "RabbitMQ" },
+      { label: "RabbitMQ", lucideIcon: Workflow },
       { label: "Docker", iconLight: `${BASE}/docker.svg` },
     ],
   },
@@ -66,6 +83,13 @@ const categories: Category[] = [
           <div class="flex flex-wrap gap-2">
             {cat.items.map((item) => (
               <span class="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-sm text-muted-foreground font-mono">
+                {item.lucideIcon && (
+                  <item.lucideIcon
+                    size={16}
+                    aria-hidden="true"
+                    class="w-4 h-4 shrink-0"
+                  />
+                )}
                 {item.iconLight && (
                   <img
                     src={item.iconLight}
