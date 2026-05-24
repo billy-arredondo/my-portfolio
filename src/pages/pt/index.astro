@@ -1,15 +1,18 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import Hero from '@/components/home/Hero.astro';
-import TechStack from '@/components/home/TechStack.astro';
-import FeaturedProjects from '@/components/home/FeaturedProjects.astro';
-import { buildPersonSchema } from '@/lib/seo';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/home/Hero.astro";
+import TechStack from "@/components/home/TechStack.astro";
+import FeaturedProjects from "@/components/home/FeaturedProjects.astro";
+import { buildPersonSchema } from "@/lib/seo";
 
 const personSchema = buildPersonSchema(
-  'Your Name',
-  'Desenvolvedor Full-Stack Sênior (.NET / React / Azure)',
-  Astro.site?.toString() ?? '',
-  ['https://github.com/yourusername', 'https://linkedin.com/in/yourprofile']
+  "Billy Arredondo",
+  "Desenvolvedor Full-Stack Sênior (.NET / React / Azure)",
+  Astro.site?.toString() ?? "",
+  [
+    "https://github.com/billy-arredondo",
+    "https://linkedin.com/in/billy-arredondo",
+  ],
 );
 ---
 

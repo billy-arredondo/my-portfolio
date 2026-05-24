@@ -1,6 +1,11 @@
 ---
-import { buildHreflang, buildCanonical, getOgLocale, buildPersonSchema } from '@/lib/seo';
-import type { Lang } from '@/i18n/ui';
+import {
+  buildHreflang,
+  buildCanonical,
+  getOgLocale,
+  buildPersonSchema,
+} from "@/lib/seo";
+import type { Lang } from "@/i18n/ui";
 
 interface Props {
   title: string;
@@ -8,7 +13,7 @@ interface Props {
   lang: Lang;
   path: string;
   image?: string;
-  type?: 'website' | 'article';
+  type?: "website" | "article";
   publishedTime?: string;
   jsonLd?: Record<string, unknown>;
   availableLangs?: Lang[];
@@ -20,13 +25,13 @@ const {
   lang,
   path,
   image,
-  type = 'website',
+  type = "website",
   publishedTime,
   jsonLd,
-  availableLangs = ['en', 'es', 'pt'],
+  availableLangs = ["en", "es", "pt"],
 } = Astro.props;
 
-const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const site = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const canonical = buildCanonical(site, path);
 const hreflangEntries = buildHreflang(site, path, lang, availableLangs);
 const ogLocale = getOgLocale(lang);
@@ -38,9 +43,11 @@ const fullTitle = `${title} — Portfolio`;
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 
-{hreflangEntries.map(({ lang: hl, url }) => (
-  <link rel="alternate" hreflang={hl} href={url} />
-))}
+{
+  hreflangEntries.map(({ lang: hl, url }) => (
+    <link rel="alternate" hreflang={hl} href={url} />
+  ))
+}
 
 <!-- Open Graph -->
 <meta property="og:type" content={type} />
@@ -49,11 +56,16 @@ const fullTitle = `${title} — Portfolio`;
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:locale" content={ogLocale} />
-{hreflangEntries
-  .filter(e => e.lang !== 'x-default' && e.lang !== lang)
-  .map(e => (
-    <meta property="og:locale:alternate" content={getOgLocale(e.lang as Lang)} />
-  ))}
+{
+  hreflangEntries
+    .filter((e) => e.lang !== "x-default" && e.lang !== lang)
+    .map((e) => (
+      <meta
+        property="og:locale:alternate"
+        content={getOgLocale(e.lang as Lang)}
+      />
+    ))
+}
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -61,8 +73,14 @@ const fullTitle = `${title} — Portfolio`;
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
 
-{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{
+  publishedTime && (
+    <meta property="article:published_time" content={publishedTime} />
+  )
+}
 
-{jsonLd && (
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-)}
+{
+  jsonLd && (
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  )
+}
