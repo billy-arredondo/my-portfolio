@@ -10,11 +10,11 @@ pnpm build        # production build → dist/
 pnpm preview      # preview the dist/ build
 ```
 
-Always use `pnpm`. Never use `npm` — the project uses `pnpm-lock.yaml` and the CI (`azure-swa.yml`) is configured for pnpm.
+Always use `pnpm`. Never use `npm` — the project uses `pnpm-lock.yaml` and the CI is configured for pnpm. Never run `git push` unless the user explicitly asks.
 
 ## Architecture
 
-**Astro 6 + React 19, fully static (`output: 'static'`)**. Deployed to Azure Static Web Apps via `.github/workflows/azure-swa.yml` with `skip_app_build: true` (Oryx is bypassed; the workflow runs `pnpm build` itself).
+**Astro 6 + React 19, fully static (`output: 'static'`)**. Deployed to Azure Static Web Apps via `.github/workflows/azure-static-web-apps-calm-cliff-0fe0cc003.yml`. The workflow runs `pnpm build` itself and passes `skip_app_build: true` + `app_location: "dist"` to the deploy action (Oryx is bypassed). Authentication uses OIDC (`github_id_token` via `actions/github-script@v6`) plus the `AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_CLIFF_0FE0CC003` repository secret.
 
 ### Islands
 
@@ -60,11 +60,12 @@ Tailwind v4 configured via `@tailwindcss/vite` Vite plugin (no `tailwind.config.
 
 ## Key files
 
-| File                                | Purpose                                       |
-| ----------------------------------- | --------------------------------------------- |
-| `src/layouts/BaseLayout.astro`      | Root HTML shell, ClientRouter, theme script   |
-| `src/i18n/ui.ts`                    | All translation strings for en/es/pt          |
-| `src/content.config.ts`             | Zod schemas for content collections           |
-| `src/components/site/Header.astro`  | Nav, smart scroll script, lang/theme controls |
-| `src/components/site/MobileNav.tsx` | Sheet with nav + lang + theme (mobile)        |
-| `docs/ux-audit.md`                  | Prioritised UX/a11y backlog (not served)      |
+| File                                                               | Purpose                                       |
+| ------------------------------------------------------------------ | --------------------------------------------- |
+| `src/layouts/BaseLayout.astro`                                     | Root HTML shell, ClientRouter, theme script   |
+| `src/i18n/ui.ts`                                                   | All translation strings for en/es/pt          |
+| `src/content.config.ts`                                            | Zod schemas for content collections           |
+| `src/components/site/Header.astro`                                 | Nav, smart scroll script, lang/theme controls |
+| `src/components/site/MobileNav.tsx`                                | Sheet with nav + lang + theme (mobile)        |
+| `docs/ux-audit.md`                                                 | Prioritised UX/a11y backlog (not served)      |
+| `.github/workflows/azure-static-web-apps-calm-cliff-0fe0cc003.yml` | CI/CD: pnpm build + Azure SWA deploy (OIDC)   |
