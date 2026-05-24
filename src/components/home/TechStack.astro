@@ -8,6 +8,7 @@ interface TechItem {
   iconLight?: string;
   iconDark?: string;
   lucideIcon?: typeof DatabaseZap;
+  grayscale?: boolean;
 }
 
 interface Category {
@@ -38,6 +39,7 @@ const categories: Category[] = [
         label: "React",
         iconLight: `${BASE}/react_light.svg`,
         iconDark: `${BASE}/react_dark.svg`,
+        grayscale: true,
       },
       { label: "TypeScript", iconLight: `${BASE}/typescript.svg` },
       {
@@ -98,6 +100,7 @@ const categories: Category[] = [
                     height={16}
                     aria-hidden="true"
                     class={`w-4 h-4 shrink-0${item.iconDark ? " dark:hidden" : ""}`}
+                    style={item.grayscale ? "filter: grayscale(1)" : ""}
                   />
                 )}
                 {item.iconDark && (
@@ -108,6 +111,7 @@ const categories: Category[] = [
                     height={16}
                     aria-hidden="true"
                     class="w-4 h-4 shrink-0 hidden dark:block"
+                    style={item.grayscale ? "filter: grayscale(1)" : ""}
                   />
                 )}
                 {item.label}
