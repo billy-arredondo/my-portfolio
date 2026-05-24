@@ -1,5 +1,5 @@
 ---
-import { DatabaseZap, Network, Workflow, FlaskConical, Layers, Zap, Globe } from "lucide-react";
+import { DatabaseZap, Network, Workflow, FlaskConical, Layers, Zap, Globe, Braces, Database } from "lucide-react";
 
 const BASE = "https://svgl.app/library";
 
@@ -8,7 +8,6 @@ interface TechItem {
   iconLight?: string;
   iconDark?: string;
   lucideIcon?: typeof DatabaseZap;
-  grayscale?: boolean;
 }
 
 interface Category {
@@ -20,10 +19,10 @@ const categories: Category[] = [
   {
     name: "Backend",
     items: [
-      { label: ".NET / C#", iconLight: `${BASE}/dotnet.svg` },
-      { label: ".NET Core", iconLight: `${BASE}/dotnet.svg` },
-      { label: ".NET Framework", iconLight: `${BASE}/dotnet.svg` },
-      { label: "Entity Framework", iconLight: `${BASE}/dotnet.svg` },
+      { label: ".NET / C#", lucideIcon: Braces },
+      { label: ".NET Core", lucideIcon: Braces },
+      { label: ".NET Framework", lucideIcon: Braces },
+      { label: "EF Core", lucideIcon: Database },
       { label: "CQRS", lucideIcon: DatabaseZap },
       { label: "Dapper", lucideIcon: Layers },
       { label: "Node.js", iconLight: `${BASE}/nodejs.svg` },
@@ -39,7 +38,6 @@ const categories: Category[] = [
         label: "React",
         iconLight: `${BASE}/react_light.svg`,
         iconDark: `${BASE}/react_dark.svg`,
-        grayscale: true,
       },
       { label: "TypeScript", iconLight: `${BASE}/typescript.svg` },
       {
@@ -100,7 +98,7 @@ const categories: Category[] = [
                     height={16}
                     aria-hidden="true"
                     class={`w-4 h-4 shrink-0${item.iconDark ? " dark:hidden" : ""}`}
-                    style={item.grayscale ? "filter: grayscale(1)" : ""}
+                    style="filter: grayscale(1)"
                   />
                 )}
                 {item.iconDark && (
@@ -111,7 +109,7 @@ const categories: Category[] = [
                     height={16}
                     aria-hidden="true"
                     class="w-4 h-4 shrink-0 hidden dark:block"
-                    style={item.grayscale ? "filter: grayscale(1)" : ""}
+                    style="filter: grayscale(1)"
                   />
                 )}
                 {item.label}
