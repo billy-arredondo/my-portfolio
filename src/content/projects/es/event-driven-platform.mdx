@@ -1,0 +1,55 @@
+---
+title: "Plataforma de Integración Event-Driven"
+description: "Plataforma de microservicios con Azure Service Bus y .NET 8 para procesamiento de pedidos en tiempo real a través de servicios distribuidos."
+locale: es
+translationKey: event-driven-platform
+status: completed
+featured: true
+stack:
+  - ".NET 8"
+  - "ASP.NET Core"
+  - "Azure Service Bus"
+  - "Azure Functions"
+  - "React"
+  - "TypeScript"
+  - "SQL Server"
+  - "Docker"
+role: "Lead Backend Engineer"
+year: 2024
+startDate: 2023-06-01
+endDate: 2024-02-28
+metrics:
+  - label: "Mensajes/minuto"
+    value: "50k"
+  - label: "Latencia P99"
+    value: "< 120ms"
+  - label: "Uptime"
+    value: "99.95%"
+  - label: "Servicios"
+    value: "12"
+tags:
+  - microservicios
+  - azure
+  - event-driven
+draft: false
+---
+
+## Contexto
+
+Una empresa e-commerce de tamaño medio necesitaba reemplazar un monolito que gestionaba pedidos, sincronización de inventario y procesamiento de pagos. El sistema procesaba ~50.000 pedidos/día y fallaba bajo carga pico. Equipo: 6 ingenieros (3 backend, 2 frontend, 1 DevOps).
+
+## Problema
+
+El monolito tenía acoplamiento síncrono entre pagos e inventario, causando fallos en cascada durante el tráfico pico. Cualquier caída del proveedor de pagos congelaba todo el flujo de pedidos. Los despliegues requerían ventanas de 40 minutos de inactividad.
+
+## Approach
+
+Elegimos arquitectura event-driven con Azure Service Bus como message broker. Cada bounded context (pedidos, inventario, pagos, notificaciones) se convirtió en un servicio independiente con su propia base de datos SQL Server (patrón database-per-service).
+
+**Service Bus sobre Event Grid**: necesitábamos entrega garantizada con dead-letter queues y message sessions para procesamiento ordenado dentro de la secuencia de pedidos de un cliente.
+
+**Patrón Outbox** (EF Core + Azure Functions timer trigger) garantizó consistencia transaccional.
+
+## Qué haría diferente
+
+Las bases de datos SQL Server por servicio resultaron caras. Para el servicio de notificaciones (lectura intensiva, sin consultas complejas), Cosmos DB con change feed habría sido más barato. Evaluaría el almacenamiento por servicio antes de defaultear a SQL Server en todos.

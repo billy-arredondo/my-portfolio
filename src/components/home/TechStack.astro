@@ -1,0 +1,17 @@
+---
+const stack = [
+  '.NET / C#', 'ASP.NET Core', 'React', 'TypeScript',
+  'Azure', 'Microservices', 'Azure Functions', 'Azure Service Bus',
+  'Docker', 'Entity Framework', 'SQL Server', 'Redis',
+];
+---
+
+<section class="container mx-auto max-w-5xl px-4 pb-16">
+  <div class="flex flex-wrap gap-2">
+    {stack.map(tech => (
+      <span class="rounded-full border border-border px-3 py-1 text-sm text-muted-foreground font-mono">
+        {tech}
+      </span>
+    ))}
+  </div>
+</section>

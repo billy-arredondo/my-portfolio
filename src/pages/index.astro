@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/home/Hero.astro';
+import TechStack from '@/components/home/TechStack.astro';
+import FeaturedProjects from '@/components/home/FeaturedProjects.astro';
+import { buildPersonSchema } from '@/lib/seo';
+
+// TODO: replace placeholder values with your real data
+const personSchema = buildPersonSchema(
+  'Your Name',
+  'Senior Full-Stack Developer (.NET / React / Azure)',
+  Astro.site?.toString() ?? '',
+  [
+    'https://github.com/yourusername',
+    'https://linkedin.com/in/yourprofile',
+  ]
+);
+---
+
+<BaseLayout
+  title="Home"
+  description="Senior Full-Stack Developer specialising in .NET, React, TypeScript and Azure. Available for freelance projects."
+  jsonLd={personSchema}
+>
+  <Hero />
+  <TechStack />
+  <FeaturedProjects />
+</BaseLayout>

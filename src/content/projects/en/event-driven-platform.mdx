@@ -1,0 +1,57 @@
+---
+title: "Event-Driven Integration Platform"
+description: "Microservices platform using Azure Service Bus and .NET 8 to handle real-time order processing across distributed services."
+locale: en
+translationKey: event-driven-platform
+status: completed
+featured: true
+stack:
+  - ".NET 8"
+  - "ASP.NET Core"
+  - "Azure Service Bus"
+  - "Azure Functions"
+  - "React"
+  - "TypeScript"
+  - "SQL Server"
+  - "Docker"
+role: "Lead Backend Engineer"
+year: 2024
+startDate: 2023-06-01
+endDate: 2024-02-28
+metrics:
+  - label: "Message throughput"
+    value: "50k/min"
+  - label: "P99 latency"
+    value: "< 120ms"
+  - label: "Uptime"
+    value: "99.95%"
+  - label: "Services"
+    value: "12"
+tags:
+  - microservices
+  - azure
+  - event-driven
+draft: false
+---
+
+## Context
+
+A mid-size e-commerce company needed to replace a monolith handling order management, inventory sync, and payment processing. The system processed ~50,000 orders/day and was failing under peak load. Team size: 6 engineers (3 backend, 2 frontend, 1 DevOps).
+
+## Problem
+
+The existing monolith had synchronous coupling between payment and inventory, causing cascading failures during peak traffic. Any payment provider outage would freeze the entire order flow. Deployments required 40-minute downtime windows.
+
+## Approach
+
+We chose an event-driven architecture with Azure Service Bus as the message broker. Each bounded context (orders, inventory, payments, notifications) became an independent service with its own SQL Server database (database-per-service pattern).
+
+Key decision: **Service Bus over Event Grid** because we needed guaranteed delivery with dead-letter queues and message sessions for ordered processing within a customer's order sequence. Event Grid's at-least-once delivery without sessions would have complicated our inventory reconciliation logic.
+
+**Outbox pattern** (EF Core + Azure Functions timer trigger) ensured transactional consistency: a service writes its domain event to a local outbox table in the same transaction as its state change, then a background publisher reads and dispatches to Service Bus.
+
+## What I'd do differently
+
+The per-service SQL Server databases were expensive. For the notifications service (read-heavy, no complex queries), a Cosmos DB with change feed would have been cheaper and better fit. I'd evaluate storage per service earlier rather than defaulting to SQL Server everywhere.
+
+Also: we built our own retry/circuit-breaker middleware before Polly v8 was stable. Today I'd use Polly v8's `ResiliencePipeline` from day one.

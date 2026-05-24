@@ -1,0 +1,66 @@
+---
+import '@/styles/globals.css';
+import SEO from '@/components/seo/SEO.astro';
+import Header from '@/components/site/Header.astro';
+import Footer from '@/components/site/Footer.astro';
+import { getLangFromUrl } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  jsonLd?: Record<string, unknown>;
+  availableLangs?: Lang[];
+}
+
+const {
+  title,
+  description,
+  image,
+  type = 'website',
+  publishedTime,
+  jsonLd,
+  availableLangs,
+} = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO
+      title={title}
+      description={description}
+      lang={lang}
+      path={path}
+      image={image}
+      type={type}
+      publishedTime={publishedTime}
+      jsonLd={jsonLd}
+      availableLangs={availableLangs}
+    />
+    <script is:inline>
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen bg-background text-foreground antialiased">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

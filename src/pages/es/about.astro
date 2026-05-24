@@ -1,0 +1,54 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Badge } from '@/components/ui/badge';
+import { useTranslations } from '@/i18n/utils';
+import { buildPersonSchema } from '@/lib/seo';
+
+const lang = 'es' as const;
+const t = useTranslations(lang);
+const personSchema = buildPersonSchema(
+  'Your Name',
+  'Desarrollador Full-Stack Senior (.NET / React / Azure)',
+  Astro.site?.toString() ?? '',
+  ['https://github.com/yourusername', 'https://linkedin.com/in/yourprofile']
+);
+const expertise = [
+  { area: '.NET / C#', since: 'desde 2017' },
+  { area: 'ASP.NET Core', since: 'desde 2018' },
+  { area: 'React + TypeScript', since: 'desde 2019' },
+  { area: 'Azure', since: 'desde 2020' },
+  { area: 'Microservicios', since: 'desde 2020' },
+];
+---
+
+<BaseLayout title={t('about.title')} description="Sobre mí — Desarrollador Full-Stack Senior." jsonLd={personSchema}>
+  <div class="container mx-auto max-w-3xl px-4 py-16">
+    <h1 class="text-4xl font-bold mb-6">{t('about.title')}</h1>
+    <div class="mb-4"><Badge>{t('about.available')}</Badge></div>
+    <p class="text-lg text-muted-foreground mb-12 leading-relaxed">
+      Desarrollador Full-Stack Senior con foco en arquitectura backend, sistemas cloud-native y frontends con React.
+      Ayudo a empresas a construir software escalable y mantenible — desde microservicios event-driven hasta aplicaciones web.
+    </p>
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold mb-6">Especialización</h2>
+      <div class="space-y-3">
+        {expertise.map(e => (
+          <div class="flex items-center justify-between border-b border-border/50 pb-3">
+            <span class="font-medium">{e.area}</span>
+            <span class="text-sm text-muted-foreground font-mono">{e.since}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+    <div class="flex flex-wrap gap-3">
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-sm border border-border rounded-md px-4 py-2 hover:bg-accent transition-colors">
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-sm border border-border rounded-md px-4 py-2 hover:bg-accent transition-colors">
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+import { Badge } from '@/components/ui/badge';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  status: 'in-progress' | 'completed' | 'archived';
+}
+
+const { status } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const labelMap = {
+  'in-progress': t('projects.status.inProgress'),
+  'completed': t('projects.status.completed'),
+  'archived': t('projects.status.archived'),
+} as const;
+
+const variantMap = {
+  'in-progress': 'default',
+  'completed': 'secondary',
+  'archived': 'outline',
+} as const;
+---
+
+<Badge variant={variantMap[status]}>{labelMap[status]}</Badge>

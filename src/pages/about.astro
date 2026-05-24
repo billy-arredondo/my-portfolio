@@ -1,0 +1,74 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Badge } from '@/components/ui/badge';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { buildPersonSchema } from '@/lib/seo';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const personSchema = buildPersonSchema(
+  'Your Name',
+  'Senior Full-Stack Developer (.NET / React / Azure)',
+  Astro.site?.toString() ?? '',
+  ['https://github.com/yourusername', 'https://linkedin.com/in/yourprofile']
+);
+
+// TODO: update with your real data
+const expertise = [
+  { area: '.NET / C#', since: 'since 2017' },
+  { area: 'ASP.NET Core', since: 'since 2018' },
+  { area: 'React + TypeScript', since: 'since 2019' },
+  { area: 'Azure', since: 'since 2020' },
+  { area: 'Microservices', since: 'since 2020' },
+];
+---
+
+<BaseLayout title={t('about.title')} description="About me — Senior Full-Stack Developer." jsonLd={personSchema}>
+  <div class="container mx-auto max-w-3xl px-4 py-16">
+    <h1 class="text-4xl font-bold mb-6">{t('about.title')}</h1>
+
+    <div class="mb-4">
+      <Badge>{t('about.available')}</Badge>
+    </div>
+
+    <!-- TODO: Write your real bio -->
+    <p class="text-lg text-muted-foreground mb-12 leading-relaxed">
+      Senior Full-Stack Developer with a focus on backend architecture, cloud-native systems, and React frontends.
+      I help companies build scalable, maintainable software — from event-driven microservices to polished web applications.
+    </p>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold mb-6">Core expertise</h2>
+      <div class="space-y-3">
+        {expertise.map(e => (
+          <div class="flex items-center justify-between border-b border-border/50 pb-3">
+            <span class="font-medium">{e.area}</span>
+            <span class="text-sm text-muted-foreground font-mono">{e.since}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold mb-4">How I work</h2>
+      <!-- TODO: Write your real working style -->
+      <p class="text-muted-foreground leading-relaxed">
+        I work async-first, communicate proactively, and favour clear ownership boundaries.
+        Available for remote projects across time zones (UTC-X). Typical engagement: full-time or part-time contracts,
+        architecture consulting, and code review.
+      </p>
+    </section>
+
+    <div class="flex flex-wrap gap-3">
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-sm border border-border rounded-md px-4 py-2 hover:bg-accent transition-colors">
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-sm border border-border rounded-md px-4 py-2 hover:bg-accent transition-colors">
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</BaseLayout>

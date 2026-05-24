@@ -1,0 +1,26 @@
+---
+import ProjectCard from '@/components/projects/ProjectCard.astro';
+import { Button } from '@/components/ui/button';
+import { getFeaturedProjects } from '@/lib/projects';
+import { getLangFromUrl, useTranslations, localizedPath } from '@/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const projects = await getFeaturedProjects(lang);
+---
+
+{projects.length > 0 && (
+  <section class="container mx-auto max-w-5xl px-4 pb-24">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-2xl font-bold">{t('projects.title')}</h2>
+      <a href={localizedPath(lang, '/projects')}>
+        <Button variant="ghost" size="sm">{t('common.viewAll')} →</Button>
+      </a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map(project => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </section>
+)}

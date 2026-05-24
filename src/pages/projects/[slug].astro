@@ -1,0 +1,112 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StatusBadge from '@/components/projects/StatusBadge.astro';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { getProjects, getProjectSlug, getTranslationsForProject } from '@/lib/projects';
+import { getLangFromUrl, useTranslations, localizedPath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+export async function getStaticPaths() {
+  const projects = await getProjects('en');
+  return projects.map(entry => ({
+    params: { slug: getProjectSlug(entry) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const { data } = entry;
+const { Content } = await render(entry);
+
+const translations = await getTranslationsForProject(data.translationKey);
+const availableLangs = Object.keys(translations) as Lang[];
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  availableLangs={availableLangs}
+>
+  <article class="container mx-auto max-w-3xl px-4 py-16">
+    <div class="mb-2">
+      <a
+        href={localizedPath(lang, '/projects')}
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        ← {t('common.backToProjects')}
+      </a>
+    </div>
+
+    <header class="mb-10">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <StatusBadge status={data.status} />
+        <span class="text-sm text-muted-foreground font-mono">{data.year}</span>
+        {data.updatedDate && (
+          <span class="text-xs text-muted-foreground">
+            {t('common.updatedOn')} {data.updatedDate.toLocaleDateString(lang, { year: 'numeric', month: 'short' })}
+          </span>
+        )}
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-bold mb-3">{data.title}</h1>
+      <p class="text-lg text-muted-foreground mb-6">{data.description}</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+        <div>
+          <p class="text-muted-foreground mb-1">{t('projects.role')}</p>
+          <p class="font-medium">{data.role}</p>
+        </div>
+        {data.demo && (
+          <div>
+            <p class="text-muted-foreground mb-1">{t('projects.demo')}</p>
+            <a href={data.demo} target="_blank" rel="noopener noreferrer" class="font-medium hover:text-primary transition-colors">
+              Live Demo ↗
+            </a>
+          </div>
+        )}
+        {data.repo && (
+          <div>
+            <p class="text-muted-foreground mb-1">{t('projects.repo')}</p>
+            <a href={data.repo} target="_blank" rel="noopener noreferrer" class="font-medium hover:text-primary transition-colors">
+              GitHub ↗
+            </a>
+          </div>
+        )}
+      </div>
+    </header>
+
+    <div class="mb-8">
+      <p class="text-xs text-muted-foreground uppercase tracking-widest mb-2 font-mono">{t('projects.stack')}</p>
+      <div class="flex flex-wrap gap-2">
+        {data.stack.map(tech => (
+          <Badge variant="outline" class="font-mono text-xs">{tech}</Badge>
+        ))}
+      </div>
+    </div>
+
+    {data.metrics && data.metrics.length > 0 && (
+      <div class="mb-10">
+        <Separator class="mb-6" />
+        <h2 class="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4">{t('projects.metrics')}</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {data.metrics.map(m => (
+            <div class="border border-border rounded-lg p-4 text-center">
+              <p class="text-2xl font-bold">{m.value}</p>
+              <p class="text-xs text-muted-foreground mt-1">{m.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <Separator class="mb-8" />
+
+    <div class="prose prose-neutral dark:prose-invert max-w-none">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
