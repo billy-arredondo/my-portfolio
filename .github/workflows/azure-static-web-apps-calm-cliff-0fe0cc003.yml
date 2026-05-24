@@ -52,8 +52,8 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_CLIFF_0FE0CC003 }}
           action: "upload"
-          app_location: "/"
-          output_location: "dist"
+          app_location: "dist"
+          output_location: ""
           skip_app_build: true
           github_id_token: ${{ steps.idtoken.outputs.result }}
 
