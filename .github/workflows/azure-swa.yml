@@ -20,9 +20,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Get OIDC token
-        run: npm install @actions/core@1.6.0 @actions/http-client
-
       - name: Get ID token
         uses: actions/github-script@v6
         id: idtoken
