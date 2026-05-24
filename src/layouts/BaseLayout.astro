@@ -1,16 +1,17 @@
 ---
-import '@/styles/globals.css';
-import SEO from '@/components/seo/SEO.astro';
-import Header from '@/components/site/Header.astro';
-import Footer from '@/components/site/Footer.astro';
-import { getLangFromUrl } from '@/i18n/utils';
-import type { Lang } from '@/i18n/ui';
+import "@/styles/globals.css";
+import { ClientRouter } from "astro:transitions";
+import SEO from "@/components/seo/SEO.astro";
+import Header from "@/components/site/Header.astro";
+import Footer from "@/components/site/Footer.astro";
+import { getLangFromUrl } from "@/i18n/utils";
+import type { Lang } from "@/i18n/ui";
 
 interface Props {
   title: string;
   description: string;
   image?: string;
-  type?: 'website' | 'article';
+  type?: "website" | "article";
   publishedTime?: string;
   jsonLd?: Record<string, unknown>;
   availableLangs?: Lang[];
@@ -20,7 +21,7 @@ const {
   title,
   description,
   image,
-  type = 'website',
+  type = "website",
   publishedTime,
   jsonLd,
   availableLangs,
@@ -48,12 +49,18 @@ const path = Astro.url.pathname;
       jsonLd={jsonLd}
       availableLangs={availableLangs}
     />
+    <ClientRouter />
     <script is:inline>
-      const stored = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (stored === 'dark' || (!stored && prefersDark)) {
-        document.documentElement.classList.add('dark');
+      function applyTheme() {
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle(
+          "dark",
+          stored === "dark" || (!stored && prefersDark)
+        );
       }
+      applyTheme();
+      document.addEventListener("astro:after-swap", applyTheme);
     </script>
   </head>
   <body class="min-h-screen bg-background text-foreground antialiased">
