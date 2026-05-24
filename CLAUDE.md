@@ -19,6 +19,7 @@ Always use `pnpm`. Never use `npm` — the project uses `pnpm-lock.yaml` and the
 ### Islands
 
 Astro handles all layout and page rendering server-side. React components are hydrated selectively:
+
 - `client:load` — interactive immediately (MobileNav)
 - `client:idle` — hydrated when idle (ThemeToggle on desktop)
 
@@ -49,6 +50,7 @@ Tailwind v4 configured via `@tailwindcss/vite` Vite plugin (no `tailwind.config.
 ### ClientRouter (View Transitions)
 
 `<ClientRouter />` from `astro:transitions` is in `BaseLayout.astro`. Two known behaviors to keep in mind:
+
 1. **Theme persistence**: The `applyTheme()` function in `BaseLayout.astro` runs on both initial load and `astro:after-swap` — this is intentional. Do not simplify it back to a one-time script.
 2. **Smart header**: `Header.astro` includes a bundled `<script>` that listens to `astro:page-load` to re-register scroll listeners after each navigation. The scroll handler reads `document.body.dataset.navOpen` to pause while MobileNav is open.
 
@@ -58,11 +60,11 @@ Tailwind v4 configured via `@tailwindcss/vite` Vite plugin (no `tailwind.config.
 
 ## Key files
 
-| File | Purpose |
-|---|---|
-| `src/layouts/BaseLayout.astro` | Root HTML shell, ClientRouter, theme script |
-| `src/i18n/ui.ts` | All translation strings for en/es/pt |
-| `src/content.config.ts` | Zod schemas for content collections |
-| `src/components/site/Header.astro` | Nav, smart scroll script, lang/theme controls |
-| `src/components/site/MobileNav.tsx` | Sheet with nav + lang + theme (mobile) |
-| `docs/ux-audit.md` | Prioritised UX/a11y backlog (not served) |
+| File                                | Purpose                                       |
+| ----------------------------------- | --------------------------------------------- |
+| `src/layouts/BaseLayout.astro`      | Root HTML shell, ClientRouter, theme script   |
+| `src/i18n/ui.ts`                    | All translation strings for en/es/pt          |
+| `src/content.config.ts`             | Zod schemas for content collections           |
+| `src/components/site/Header.astro`  | Nav, smart scroll script, lang/theme controls |
+| `src/components/site/MobileNav.tsx` | Sheet with nav + lang + theme (mobile)        |
+| `docs/ux-audit.md`                  | Prioritised UX/a11y backlog (not served)      |
