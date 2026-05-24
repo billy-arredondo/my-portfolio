@@ -1,5 +1,7 @@
 ---
 import { getLangFromUrl, useTranslations, localizedPath } from "@/i18n/utils";
+import { languages } from "@/i18n/ui";
+import type { Lang } from "@/i18n/ui";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle";
 import MobileNav from "./MobileNav";
@@ -13,10 +15,19 @@ const navLinks = [
   { href: localizedPath(lang, "/about"), label: t("nav.about") },
   { href: localizedPath(lang, "/contact"), label: t("nav.contact") },
 ];
+
+const pathWithoutLang = Astro.url.pathname.replace(/^\/(es|pt)/, "") || "/";
+const langLinks = Object.entries(languages).map(([code, label]) => ({
+  code,
+  label: label as string,
+  href: localizedPath(code as Lang, pathWithoutLang),
+  current: code === lang,
+}));
 ---
 
 <header
-  class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-sm"
+  id="site-header"
+  class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-sm transition-transform duration-300 ease-in-out"
 >
   <div
     class="container mx-auto flex h-16 max-w-5xl items-center justify-between px-4"
@@ -42,12 +53,53 @@ const navLinks = [
       }
     </nav>
 
-    <div class="flex items-center gap-2">
+    <!-- Desktop controls -->
+    <div class="hidden md:flex items-center gap-2">
       <LanguageSwitcher />
       <ThemeToggle client:idle />
-      <div class="md:hidden">
-        <MobileNav links={navLinks} client:load />
-      </div>
+    </div>
+
+    <!-- Mobile: hamburger only -->
+    <div class="md:hidden">
+      <MobileNav links={navLinks} langLinks={langLinks} client:load />
     </div>
   </div>
 </header>
+
+<script>
+  let removeScrollListener: (() => void) | undefined;
+
+  function setupScrollHeader() {
+    removeScrollListener?.();
+
+    const header = document.getElementById("site-header");
+    if (!header) return;
+
+    header.classList.remove("-translate-y-full");
+    let lastY = window.scrollY;
+    let rafId: ReturnType<typeof requestAnimationFrame> | undefined;
+
+    const onScroll = () => {
+      if (rafId !== undefined) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = undefined;
+        if (document.body.dataset.navOpen === "true") return;
+        const y = window.scrollY;
+        if (y < 80) {
+          header.classList.remove("-translate-y-full");
+        } else if (y > lastY) {
+          header.classList.add("-translate-y-full");
+        } else {
+          header.classList.remove("-translate-y-full");
+        }
+        lastY = y;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    removeScrollListener = () =>
+      window.removeEventListener("scroll", onScroll);
+  }
+
+  document.addEventListener("astro:page-load", setupScrollHeader);
+</script>

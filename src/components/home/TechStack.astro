@@ -1,30 +1,96 @@
 ---
-const stack = [
-  ".NET / C#",
-  "Azure",
-  ".NET Core",
-  ".NET Framework",
-  "React",
-  "TypeScript",
-  "Microservices",
-  "Azure Functions",
-  "Azure Service Bus",
-  "RabbitMQ",
-  "Docker",
-  "Entity Framework",
-  "SQL Server",
-  "CQRS",
-  "Redis",
+const BASE = "https://svgl.app/library";
+
+interface TechItem {
+  label: string;
+  iconLight?: string;
+  iconDark?: string;
+}
+
+interface Category {
+  name: string;
+  items: TechItem[];
+}
+
+const categories: Category[] = [
+  {
+    name: "Backend",
+    items: [
+      { label: ".NET / C#", iconLight: `${BASE}/dotnet.svg` },
+      { label: ".NET Core", iconLight: `${BASE}/dotnet.svg` },
+      { label: ".NET Framework", iconLight: `${BASE}/dotnet.svg` },
+      { label: "Entity Framework", iconLight: `${BASE}/dotnet.svg` },
+      { label: "CQRS" },
+    ],
+  },
+  {
+    name: "Frontend",
+    items: [
+      {
+        label: "React",
+        iconLight: `${BASE}/react_light.svg`,
+        iconDark: `${BASE}/react_dark.svg`,
+      },
+      { label: "TypeScript", iconLight: `${BASE}/typescript.svg` },
+    ],
+  },
+  {
+    name: "Cloud",
+    items: [
+      { label: "Azure", iconLight: `${BASE}/azure.svg` },
+      { label: "Azure Functions", iconLight: `${BASE}/azure.svg` },
+      { label: "Azure Service Bus", iconLight: `${BASE}/azure.svg` },
+      { label: "Microservices" },
+    ],
+  },
+  {
+    name: "Data & Infra",
+    items: [
+      { label: "SQL Server", iconLight: `${BASE}/sql-server.svg` },
+      { label: "Redis", iconLight: `${BASE}/redis.svg` },
+      { label: "RabbitMQ" },
+      { label: "Docker", iconLight: `${BASE}/docker.svg` },
+    ],
+  },
 ];
 ---
 
 <section class="container mx-auto max-w-5xl px-4 pb-16">
-  <div class="flex flex-wrap gap-2">
+  <div class="flex flex-col gap-8">
     {
-      stack.map((tech) => (
-        <span class="rounded-full border border-border px-3 py-1 text-sm text-muted-foreground font-mono">
-          {tech}
-        </span>
+      categories.map((cat) => (
+        <div>
+          <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
+            {cat.name}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {cat.items.map((item) => (
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-sm text-muted-foreground font-mono">
+                {item.iconLight && (
+                  <img
+                    src={item.iconLight}
+                    alt=""
+                    width={16}
+                    height={16}
+                    aria-hidden="true"
+                    class={`w-4 h-4 shrink-0${item.iconDark ? " dark:hidden" : ""}`}
+                  />
+                )}
+                {item.iconDark && (
+                  <img
+                    src={item.iconDark}
+                    alt=""
+                    width={16}
+                    height={16}
+                    aria-hidden="true"
+                    class="w-4 h-4 shrink-0 hidden dark:block"
+                  />
+                )}
+                {item.label}
+              </span>
+            ))}
+          </div>
+        </div>
       ))
     }
   </div>
