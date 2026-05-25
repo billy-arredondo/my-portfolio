@@ -1,6 +1,7 @@
 ---
 import { getLangFromUrl, useTranslations, localizedPath } from '@/i18n/utils';
 import { Button } from '@/components/ui/button';
+import { Download } from 'lucide-react';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -20,8 +21,8 @@ const name = 'Billy';
       {t('hero.subtagline')}
     </p>
     <div class="flex flex-wrap gap-3">
-      <a href={localizedPath(lang, '/projects')}>
-        <Button size="lg">{t('hero.cta.projects')}</Button>
+      <a href="/billy-arredondo-cv.pdf" download>
+        <Button size="lg"><Download aria-hidden="true" />{t('hero.cta.downloadCv')}</Button>
       </a>
       <a href={localizedPath(lang, '/contact')}>
         <Button size="lg" variant="outline">{t('hero.cta.contact')}</Button>

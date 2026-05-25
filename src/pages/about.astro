@@ -1,61 +1,261 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { Badge } from "@/components/ui/badge";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { Button } from "@/components/ui/button";
 import { buildPersonSchema } from "@/lib/seo";
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+import { Download, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 
 const personSchema = buildPersonSchema(
   "Billy Arredondo",
-  "Senior Full-Stack Developer (.NET / React / Azure)",
+  "Senior Full Stack Engineer (.NET / React / Azure)",
   Astro.site?.toString() ?? "",
   [
-    "https://github.com/billyarredondo",
-    "https://linkedin.com/in/billyarredondo",
+    "https://github.com/billy-arredondo",
+    "https://www.linkedin.com/in/billy-arredondo/",
   ],
 );
 
-// TODO: update with your real data
-const expertise = [
-  { area: ".NET / C#", since: "since 2012" },
-  { area: "ASP.NET Core", since: "since 2018" },
-  { area: "React + TypeScript", since: "since 2020" },
-  { area: "Azure", since: "since 2020" },
-  { area: "Microservices", since: "since 2020" },
+const highlights = [
+  {
+    metric: "−99.8%",
+    description: "Async processing time",
+    company: "Page Group",
+  },
+  {
+    metric: "−97.6%",
+    description: "Frontend response time",
+    company: "Delosi",
+  },
+  { metric: "90%+", description: "Query performance gain", company: "Globant" },
+  { metric: "60×", description: "DB & app speedup", company: "CSTI Corp" },
+];
+
+const skills = [
+  {
+    category: "Backend",
+    items:
+      "C#, .NET 6/7/8, .NET Framework, ASP.NET Core, REST APIs, gRPC, Microservices, WCF, Windows Services",
+  },
+  {
+    category: "Frontend",
+    items: "React, Next.js, TypeScript, JavaScript, Vue.js, Razor Pages",
+  },
+  {
+    category: "Cloud & DevOps",
+    items: "Azure, Azure Functions, Azure DevOps, CI/CD, Docker, AWS",
+  },
+  {
+    category: "Data",
+    items:
+      "SQL Server, Azure SQL, Cosmos DB, PostgreSQL, MongoDB, Oracle Database",
+  },
+  {
+    category: "Integration & Messaging",
+    items: "Kong API Gateway, RabbitMQ, Salesforce CRM",
+  },
+  {
+    category: "Testing & Tools",
+    items: "xUnit, Selenium, EF Core, React Query, Zustand, Git",
+  },
+];
+
+const jobs = [
+  {
+    role: "Full Stack Engineer",
+    company: "Kenility",
+    location: "Miami (US Client)",
+    type: "Contract · Oct 2024 — Present",
+    bullets: [
+      "Engineered event-driven purchase workflows using Azure Functions and async processing, eliminating synchronous bottlenecks on a live US e-commerce platform.",
+      "Built REST APIs and backend services connecting payment, inventory, and order management systems across a multi-system e-commerce architecture.",
+      "Delivered full-stack features spanning ASP.NET Core MVC, Razor Pages, and Next.js — covering API design through TypeScript UI — within an agile delivery cadence.",
+    ],
+    stack:
+      "C#, .NET, ASP.NET Core MVC, Razor Pages, Next.js, TypeScript, Azure Functions, Azure SQL, Azure DevOps, CI/CD",
+  },
+  {
+    role: "Full Stack Engineer",
+    company: "Developers.net",
+    location: "Austin (US Client)",
+    type: "Freelance, Part-time · Jul 2025 — Mar 2026",
+    bullets: [
+      "Led end-to-end migration from a legacy API Gateway to Kong, implementing custom routes, plugins, and security policies — centralizing service governance across a distributed system.",
+      "Designed REST APIs and gRPC services consumed by multiple microservices, enabling typed, low-latency cross-service communication.",
+      "Containerized services with Docker and validated API contracts with xUnit, improving deployment consistency and test coverage.",
+    ],
+    stack:
+      "C#, .NET, ASP.NET Core, gRPC, Kong API Gateway, Docker, Azure Cosmos DB, xUnit",
+  },
+  {
+    role: "Full Stack Engineer",
+    company: "Acklen Avenue",
+    location: "Nashville (US Client)",
+    type: "Contract · Jan 2024 — Oct 2024",
+    bullets: [
+      "Accelerated frontend performance through client-side caching, local storage optimization, and targeted database indexing on a production SaaS platform.",
+      "Built Azure Functions automations and third-party web service integrations that replaced manual business workflows, reducing operational overhead.",
+      "Shipped features across the full .NET + React + Azure stack on an active production platform without degrading system reliability.",
+    ],
+    stack:
+      "C#, .NET, ASP.NET Core, React, TypeScript, Azure Functions, SQL Server, EF Core, Azure Blob Storage, Azure CDN, Cosmos DB, Azure DevOps",
+  },
+  {
+    role: "Full Stack Engineer",
+    company: "Globant",
+    location: "Lima",
+    type: "Full-time · Jan 2021 — Dec 2023",
+    bullets: [
+      "Designed a configurable recursive algorithm for hierarchical personnel management that cut query execution time by 90%+, replacing an approach that failed beyond three organizational levels.",
+      "Delivered database synchronization and integration across distributed services, resolving data consistency issues and reducing technical debt on a platform managing thousands of employees.",
+      "Enhanced key modules of a large-scale HR platform across the full .NET + React + SQL Server stack within a structured Scrum delivery model.",
+    ],
+    stack:
+      "C#, .NET, React, SQL Server, TypeScript, Node.js, Express.js, RabbitMQ, Azure DevOps",
+  },
+  {
+    role: "Full Stack Engineer",
+    company: "Page Group",
+    location: "Lima",
+    type: "Full-time · Apr 2019 — Dec 2020",
+    bullets: [
+      "Redesigned the async data processing pipeline, cutting execution time 99.8% — from 5 minutes to 0.7 seconds — enabling near-real-time processing of sales and payment data.",
+      "Integrated Salesforce CRM with internal sales systems, automating opportunity, quotation, and payment workflows and eliminating manual data reconciliation.",
+    ],
+    stack:
+      "C#, .NET, React, TypeScript, SQL Server, Oracle Database, Salesforce CRM",
+  },
+  {
+    role: "Full Stack Engineer",
+    company: "Experis Peru / Delosi",
+    location: "Lima",
+    type: "Full-time · Jun 2018 — Mar 2019",
+    bullets: [
+      "Rebuilt the frontend rendering pipeline for Delosi's enterprise systems, reducing response time 97.6% — from 30 seconds to 0.8 seconds — improving daily operations for hundreds of internal users.",
+      "Delivered backend integrations and system enhancements using .NET, WCF, and Windows Services, modernizing legacy enterprise systems without service interruptions.",
+    ],
+    stack:
+      "C#, .NET, ASP.NET MVC, Web API, WCF, WPF, Vue.js, SQL Server, Oracle Database",
+  },
+  {
+    role: ".NET Developer",
+    company: "CSTI Corp",
+    location: "Callao",
+    type: "Full-time · Mar 2016 — Jun 2018",
+    bullets: [
+      "Optimized database queries and application logic for a major port operations client, achieving a 60x performance gain — reducing critical processing from 5 minutes to under 5 seconds.",
+      "Delivered system enhancements and backend integrations across ASP.NET MVC, WebForms, and WCF services for a high-availability port management system.",
+    ],
+    stack:
+      "C#, .NET, ASP.NET MVC, WebForms, WCF, SQL Server, REST APIs, Windows Services",
+  },
 ];
 ---
 
 <BaseLayout
-  title={t("about.title")}
-  description="About me — Senior Full-Stack Developer."
+  title="Billy Arredondo — Senior Full Stack Engineer"
+  description="Senior Full Stack Engineer with 10+ years in .NET, React, and Azure. Available for US-based remote contracts."
   jsonLd={personSchema}
 >
   <div class="container mx-auto max-w-3xl px-4 py-16">
-    <h1 class="text-4xl font-bold mb-6">{t("about.title")}</h1>
+    <!-- Header -->
+    <div class="mb-10">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-2">
+        Billy Arredondo
+      </h1>
+      <p class="text-lg text-muted-foreground font-mono mb-5">
+        Senior Full Stack Engineer · .NET | React | Azure
+      </p>
 
-    <div class="mb-4">
-      <Badge>{t("about.available")}</Badge>
+      <div
+        class="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-muted-foreground font-mono mb-6"
+      >
+        <span class="inline-flex items-center gap-1.5">
+          <Mail size={13} aria-hidden="true" />
+          billyarredondo.coder@gmail.com
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <MapPin size={13} aria-hidden="true" />
+          Lima, Peru (UTC-5)
+        </span>
+        <span>English B2</span>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <a href="/billy-arredondo-cv.pdf" download class="print:hidden">
+          <Button size="lg">
+            <Download aria-hidden="true" />
+            Download CV
+          </Button>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/billy-arredondo/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="outline" size="lg">
+            <ExternalLink aria-hidden="true" />
+            LinkedIn
+          </Button>
+        </a>
+        <a
+          href="https://github.com/billy-arredondo"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="outline" size="lg">
+            <ExternalLink aria-hidden="true" />
+            GitHub
+          </Button>
+        </a>
+      </div>
     </div>
 
-    <!-- TODO: Write your real bio -->
-    <p class="text-lg text-muted-foreground mb-12 leading-relaxed">
-      Senior Full-Stack Developer with a focus on backend architecture,
-      cloud-native systems, and React frontends. I help companies build
-      scalable, maintainable software — from event-driven microservices to
-      polished web applications.
-    </p>
-
+    <!-- Career Highlights -->
     <section class="mb-12">
-      <h2 class="text-xl font-semibold mb-6">Core expertise</h2>
-      <div class="space-y-3">
+      <h2 class="text-xl font-semibold mb-4">Career Highlights</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
         {
-          expertise.map((e) => (
-            <div class="flex items-center justify-between border-b border-border/50 pb-3">
-              <span class="font-medium">{e.area}</span>
-              <span class="text-sm text-muted-foreground font-mono">
-                {e.since}
+          highlights.map((h) => (
+            <div class="border border-border rounded-lg p-4">
+              <div class="text-2xl font-bold font-mono text-primary mb-1">
+                {h.metric}
+              </div>
+              <div class="text-xs text-muted-foreground leading-snug mb-1">
+                {h.description}
+              </div>
+              <div class="text-xs text-muted-foreground/60 font-mono">
+                {h.company}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Profile -->
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold mb-4">Profile</h2>
+      <p class="text-muted-foreground leading-relaxed">
+        Senior Full Stack Engineer with 10+ years building production systems
+        embedded directly in US-based engineering teams. Consistent track record
+        of measurable impact: 99.8% processing time reductions, 60x performance
+        gains, and 90%+ query optimizations shipped across enterprise, SaaS, and
+        e-commerce environments. Specializes in .NET, React, and Azure across
+        the full delivery lifecycle — from API design to CI/CD. Has delivered in
+        production for clients in Miami, Austin, and Nashville with zero
+        onboarding overhead, operating on US time zones from Lima.
+      </p>
+    </section>
+
+    <!-- Technical Skills -->
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold mb-4">Technical Skills</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {
+          skills.map((s) => (
+            <div class="text-sm">
+              <span class="font-medium">{s.category}:</span>
+              <span class="text-muted-foreground font-mono ml-1.5">
+                {s.items}
               </span>
             </div>
           ))
@@ -63,34 +263,66 @@ const expertise = [
       </div>
     </section>
 
+    <!-- Experience -->
     <section class="mb-12">
-      <h2 class="text-xl font-semibold mb-4">How I work</h2>
-      <!-- TODO: Write your real working style -->
-      <p class="text-muted-foreground leading-relaxed">
-        I work async-first, communicate proactively, and favour clear ownership
-        boundaries. Available for remote projects across time zones (UTC-X).
-        Typical engagement: full-time or part-time contracts, architecture
-        consulting, and code review.
-      </p>
+      <h2 class="text-xl font-semibold mb-6">Experience</h2>
+      <div class="space-y-8">
+        {
+          jobs.map((job) => (
+            <div class="pl-4 border-l-2 border-border">
+              <h3 class="font-semibold">
+                {job.role} — {job.company}, {job.location}
+              </h3>
+              <p class="text-xs text-muted-foreground font-mono mt-0.5 mb-3">
+                {job.type}
+              </p>
+              <ul class="space-y-1.5 text-sm text-muted-foreground mb-3">
+                {job.bullets.map((b) => (
+                  <li class="leading-relaxed">— {b}</li>
+                ))}
+              </ul>
+              <p class="text-xs text-muted-foreground/60 font-mono">
+                {job.stack}
+              </p>
+            </div>
+          ))
+        }
+      </div>
     </section>
 
-    <div class="flex flex-wrap gap-3">
-      <a
-        href="https://github.com/yourusername"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 text-sm border border-border rounded-md px-4 py-2 hover:bg-accent transition-colors"
+    <!-- Education -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Education</h2>
+      <div class="pl-4 border-l-2 border-border">
+        <h3 class="font-semibold">Informatics Engineering</h3>
+        <p class="text-sm text-muted-foreground">
+          Pontificia Universidad Católica del Perú · 2007 – 2012
+        </p>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Certifications</h2>
+      <ul
+        class="pl-4 border-l-2 border-border space-y-1 text-sm text-muted-foreground font-mono"
       >
-        GitHub
-      </a>
-      <a
-        href="https://linkedin.com/in/yourprofile"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 text-sm border border-border rounded-md px-4 py-2 hover:bg-accent transition-colors"
+        <li>Azure AZ-900 — Udemy (2025)</li>
+        <li>.NET 8/9 — Udemy (2024)</li>
+      </ul>
+    </section>
+
+    <!-- Languages -->
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Languages</h2>
+      <ul
+        class="pl-4 border-l-2 border-border space-y-1 text-sm text-muted-foreground font-mono"
       >
-        LinkedIn
-      </a>
-    </div>
+        <li>
+          English — B2 Conversational (daily collaboration with US-based teams)
+        </li>
+        <li>Spanish — Native</li>
+      </ul>
+    </section>
   </div>
 </BaseLayout>

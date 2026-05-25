@@ -28,4 +28,8 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+  redirects: {
+    '/es/about': '/about',
+    '/pt/about': '/about',
+  },
 });
