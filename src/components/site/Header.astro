@@ -2,7 +2,7 @@
 import { getLangFromUrl, useTranslations, localizedPath } from "@/i18n/utils";
 import { languages } from "@/i18n/ui";
 import type { Lang } from "@/i18n/ui";
-import LanguageSwitcher from "./LanguageSwitcher.astro";
+import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeToggle from "./ThemeToggle";
 import MobileNav from "./MobileNav";
 
@@ -55,7 +55,7 @@ const langLinks = Object.entries(languages).map(([code, label]) => ({
 
     <!-- Desktop controls -->
     <div class="hidden md:flex items-center gap-2">
-      <LanguageSwitcher />
+      <LanguageSwitcher langLinks={langLinks} client:idle />
       <ThemeToggle client:idle />
     </div>
 
