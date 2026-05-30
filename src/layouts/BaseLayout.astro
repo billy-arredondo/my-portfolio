@@ -62,6 +62,51 @@ const path = Astro.url.pathname;
       applyTheme();
       document.addEventListener("astro:after-swap", applyTheme);
     </script>
+    <script is:inline>
+      (function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        var ctx = canvas.getContext('2d');
+        var visible = true;
+        var iconScale = 0.8;
+
+        function draw() {
+          var dark = document.documentElement.classList.contains('dark');
+          var bg = dark ? '#0d0d0d' : '#f5f5f5';
+          var fg = dark ? '#f5f5f5' : '#0d0d0d';
+          ctx.clearRect(0, 0, 32, 32);
+          ctx.fillStyle = bg;
+          ctx.beginPath();
+          ctx.roundRect(0, 0, 32, 32, 5);
+          ctx.fill();
+          ctx.save();
+          ctx.translate(16, 16);
+          ctx.scale(iconScale, iconScale);
+          ctx.translate(-16, -16);
+          ctx.strokeStyle = fg;
+          ctx.lineWidth = 3.5;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          ctx.moveTo(3.5, 9);
+          ctx.lineTo(12, 16);
+          ctx.lineTo(3.5, 23);
+          ctx.stroke();
+          if (visible) {
+            ctx.fillStyle = fg;
+            ctx.fillRect(15, 21, 14, 2);
+          }
+          ctx.restore();
+          var link = document.querySelector("link[rel='icon']");
+          if (link) link.setAttribute('href', canvas.toDataURL());
+        }
+
+        draw();
+        setInterval(function () { visible = !visible; draw(); }, 550);
+        new MutationObserver(draw).observe(document.documentElement, { attributeFilter: ['class'] });
+      })();
+    </script>
   </head>
   <body class="min-h-screen bg-background text-foreground antialiased">
     <Header />
