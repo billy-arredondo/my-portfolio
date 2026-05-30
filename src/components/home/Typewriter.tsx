@@ -51,13 +51,24 @@ export default function Typewriter({
   }, [displayed, isDeleting, phraseIndex, phrases, typingSpeed, deletingSpeed, pauseMs]);
 
   return (
-    <span>
-      {displayed}
-      <span
-        aria-hidden="true"
-        className="inline-block w-[2px] h-[0.85em] bg-current ml-1 align-middle -translate-y-[0.05em]"
-        style={{ opacity: cursorOn ? 1 : 0 }}
-      />
+    <span style={{ display: 'grid' }}>
+      {phrases.map((phrase, i) => (
+        <span
+          key={i}
+          aria-hidden="true"
+          style={{ gridArea: '1/1/2/2', visibility: 'hidden' }}
+        >
+          {phrase}
+        </span>
+      ))}
+      <span aria-live="polite" style={{ gridArea: '1/1/2/2' }}>
+        {displayed}
+        <span
+          aria-hidden="true"
+          className="inline-block w-[2px] h-[0.85em] bg-current ml-1 align-middle -translate-y-[0.05em]"
+          style={{ opacity: cursorOn ? 1 : 0 }}
+        />
+      </span>
     </span>
   );
 }
