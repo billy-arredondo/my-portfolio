@@ -1,0 +1,72 @@
+---
+title: "Migración a Microservicios para una Plataforma Healthcare"
+description: "Contribuí en la migración de capacidades seleccionadas de una plataforma healthcare hacia microservicios .NET en Azure, usando AKS, API Management, Key Vault, Application Insights y CQRS."
+locale: es
+translationKey: healthcare-microservices-migration
+status: completed
+featured: true
+stack:
+  - ".NET 8"
+  - "ASP.NET Core"
+  - "Microservices"
+  - "CQRS"
+  - "Azure AKS"
+  - "Azure API Management"
+  - "Azure Key Vault"
+  - "Application Insights"
+  - "Cosmos DB"
+  - "SQL Server"
+  - "Docker"
+  - "REST APIs"
+role: "Senior Backend / Full Stack Developer"
+year: 2024
+startDate: 2024-01-01
+metrics:
+  - label: "Arquitectura"
+    value: "Microservices"
+  - label: "Cloud"
+    value: "Azure"
+  - label: "Modelo de lectura"
+    value: "Cosmos DB"
+  - label: "Patrón"
+    value: "CQRS"
+tags:
+  - healthcare
+  - microservices
+  - azure
+  - cqrs
+draft: false
+---
+
+## Contexto
+
+Una plataforma healthcare estaba evolucionando desde un backend legacy hacia una arquitectura de microservicios más escalable. El sistema soportaba flujos de trabajo de agendamiento, operaciones relacionadas con salud, integraciones con terceros y procesos administrativos internos.
+
+## Problema
+
+El backend existente tenía módulos fuertemente acoplados, dependencias compartidas de base de datos y observabilidad limitada. Esto hacía los despliegues más riesgosos, ralentizaba la entrega de funcionalidades y dificultaba la resolución de problemas en entornos distribuidos.
+
+## Mi Rol
+
+Trabajé como Senior Backend / Full Stack Developer, contribuyendo en la migración de capacidades backend seleccionadas hacia microservicios .NET independientes. Mi trabajo se enfocó en implementación de APIs, soporte de integración, configuración en Azure, observabilidad y validación en entornos DEV y UAT.
+
+## Enfoque Técnico
+
+Las capacidades de negocio seleccionadas fueron migradas a microservicios basados en .NET desplegados en Azure Kubernetes Service. Las APIs se expusieron y gobernaron a través de Azure API Management, mientras que los secretos y valores de configuración se centralizaron mediante Azure Key Vault.
+
+Application Insights se utilizó para mejorar la observabilidad entre servicios, ayudando a rastrear errores, latencia, dependencias y comportamiento en tiempo de ejecución en entornos distribuidos.
+
+La solución siguió un enfoque orientado a CQRS. Las operaciones transaccionales continuaron respaldadas por SQL Server, mientras que Cosmos DB se utilizó para modelos optimizados de lectura, mejorando el rendimiento de consultas y reduciendo la presión sobre la base de datos transaccional.
+
+## Contribuciones Clave
+
+- Contribuí en la migración de capacidades backend seleccionadas desde una arquitectura legacy hacia microservicios .NET independientes.
+- Implementé y mantuve APIs REST para los flujos de trabajo de la plataforma healthcare.
+- Trabajé con servicios de Azure incluyendo AKS, API Management, Key Vault, Application Insights y Cosmos DB.
+- Apoyé la separación basada en CQRS entre operaciones transaccionales y modelos optimizados de lectura.
+- Contribuí a mejorar el diagnóstico mediante logging, telemetría y diagnósticos a nivel de entorno.
+- Colaboré con equipos distribuidos para validar funcionalidades en DEV/UAT antes de cada release.
+
+## Qué Haría Diferente
+
+Definiría los límites de los servicios y la propiedad de los modelos de lectura con mayor anticipación en el proceso de migración. En sistemas distribuidos, la ambigüedad en la propiedad entre datos transaccionales y modelos de lectura puede generar sobrecarga de coordinación innecesaria.

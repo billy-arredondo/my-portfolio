@@ -4,11 +4,12 @@ import type { Lang } from '@/i18n/ui';
 export type ProjectEntry = CollectionEntry<'projects'>;
 
 export async function getProjects(lang: Lang): Promise<ProjectEntry[]> {
-  return getCollection('projects', (entry) => {
+  const entries = await getCollection('projects', (entry) => {
     const matchesLocale = entry.data.locale === lang;
     const notDraft = import.meta.env.PROD ? !entry.data.draft : true;
     return matchesLocale && notDraft;
   });
+  return entries.sort((a, b) => b.data.year - a.data.year);
 }
 
 export async function getFeaturedProjects(lang: Lang): Promise<ProjectEntry[]> {
