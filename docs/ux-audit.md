@@ -23,10 +23,8 @@ El stack actual es sólido: Astro 6 + React 19 + Tailwind v4 + shadcn-style prim
 - **Recomendación**: reemplazar con datos reales antes de cualquier otra mejora visual.
 
 ### 3. Asimetría de contenido entre idiomas
-- PT no tiene proyectos (`projects` page siempre vacía en portugués).
-- PT detail page **omite los bloques de demo/repo y metrics** que EN/ES sí muestran.
 - ES `/about` no tiene la sección "How I work" que existe en EN.
-- 404 solo existe en EN; rutas inválidas en `/es/*` o `/pt/*` caen al 404 inglés.
+- 404 solo existe en EN; rutas inválidas en `/es/*` caen al 404 inglés.
 - **Recomendación**: si las traducciones aún no están listas, ocultar el switcher en rutas sin traducción o redirigir a EN con aviso, en lugar de mostrar paridad incompleta.
 
 ---

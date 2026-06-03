@@ -26,7 +26,7 @@ export async function getProjectBySlug(
 }
 
 export function getProjectSlug(entry: ProjectEntry): string {
-  return entry.id.replace(/^(en|es|pt)\//, '').replace(/\.mdx$/, '');
+  return entry.id.replace(/^(en|es)\//, '').replace(/\.mdx$/, '');
 }
 
 export async function getTranslationsForProject(

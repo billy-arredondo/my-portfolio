@@ -23,10 +23,10 @@ Astro handles all layout and page rendering server-side. React components are hy
 - `client:load` — interactive immediately (MobileNav)
 - `client:idle` — hydrated when idle (ThemeToggle on desktop)
 
-### i18n (3 locales: en / es / pt)
+### i18n (2 locales: en / es)
 
 - Default locale (`en`) has **no URL prefix**: `/`, `/projects`, `/about`
-- Non-default locales are prefixed: `/es/`, `/pt/`
+- Non-default locales are prefixed: `/es/`
 - Translations live in `src/i18n/ui.ts` — one flat key/value object per locale
 - Key helpers in `src/i18n/utils.ts`:
   - `getLangFromUrl(url)` — extracts lang from URL
@@ -34,7 +34,7 @@ Astro handles all layout and page rendering server-side. React components are hy
   - `localizedPath(lang, path)` — generates the correct prefixed URL
   - `getAlternatePaths(path, lang)` — used for hreflang alternate links
 
-Each locale has **mirrored page files**: `src/pages/index.astro`, `src/pages/es/index.astro`, `src/pages/pt/index.astro`. When adding a new page, create all three variants. ES and PT pages hardcode `const lang = 'es'` / `'pt'` rather than calling `getLangFromUrl`.
+Each locale has **mirrored page files**: `src/pages/index.astro`, `src/pages/es/index.astro`. When adding a new page, create both variants. The ES page hardcodes `const lang = 'es'` rather than calling `getLangFromUrl`.
 
 ### Content collections (`src/content.config.ts`)
 
@@ -63,7 +63,7 @@ Tailwind v4 configured via `@tailwindcss/vite` Vite plugin (no `tailwind.config.
 | File                                                               | Purpose                                       |
 | ------------------------------------------------------------------ | --------------------------------------------- |
 | `src/layouts/BaseLayout.astro`                                     | Root HTML shell, ClientRouter, theme script   |
-| `src/i18n/ui.ts`                                                   | All translation strings for en/es/pt          |
+| `src/i18n/ui.ts`                                                   | All translation strings for en/es             |
 | `src/content.config.ts`                                            | Zod schemas for content collections           |
 | `src/components/site/Header.astro`                                 | Nav, smart scroll script, lang/theme controls |
 | `src/components/site/MobileNav.tsx`                                | Sheet with nav + lang + theme (mobile)        |

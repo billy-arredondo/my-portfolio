@@ -7,7 +7,7 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       description: z.string().max(200),
-      locale: z.enum(['en', 'es', 'pt']),
+      locale: z.enum(['en', 'es']),
       translationKey: z.string(),
       status: z.enum(['in-progress', 'completed', 'archived']),
       featured: z.boolean().default(false),
@@ -35,7 +35,7 @@ const posts = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      locale: z.enum(['en', 'es', 'pt']),
+      locale: z.enum(['en', 'es']),
       translationKey: z.string(),
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),

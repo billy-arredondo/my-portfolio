@@ -4,13 +4,11 @@ import { localizedPath } from '@/i18n/utils';
 const localeMap: Record<Lang, string> = {
   en: 'en_US',
   es: 'es_ES',
-  pt: 'pt_BR',
 };
 
 const hreflangMap: Record<Lang, string> = {
   en: 'en',
   es: 'es',
-  pt: 'pt',
 };
 
 export interface HreflangEntry {
@@ -22,7 +20,7 @@ export function buildHreflang(
   site: string,
   currentPath: string,
   currentLang: Lang,
-  availableLangs: Lang[] = ['en', 'es', 'pt']
+  availableLangs: Lang[] = ['en', 'es']
 ): HreflangEntry[] {
   const strippedPath =
     currentLang === 'en'

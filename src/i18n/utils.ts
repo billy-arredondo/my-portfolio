@@ -22,7 +22,7 @@ export function getAlternatePaths(
   currentPath: string,
   currentLang: Lang
 ): Record<Lang, string> {
-  const langs: Lang[] = ['en', 'es', 'pt'];
+  const langs: Lang[] = ['en', 'es'];
   const strippedPath = currentLang === defaultLang
     ? currentPath
     : currentPath.replace(new RegExp(`^/${currentLang}`), '');
