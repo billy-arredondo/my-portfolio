@@ -34,7 +34,7 @@ export const ui = {
     'projects.stack': 'Stack',
     'projects.repo': 'Source',
     'projects.demo': 'Live Demo',
-    'projects.metrics': 'Outcomes',
+    'projects.metrics': 'Metrics',
     'projects.architecture': 'Architecture',
     'projects.shipped': 'Shipped so far',
     'projects.upNext': 'Up next',

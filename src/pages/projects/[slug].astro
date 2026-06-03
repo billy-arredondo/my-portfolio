@@ -95,7 +95,7 @@ const availableLangs = Object.keys(translations) as Lang[];
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {data.metrics.map(m => (
             <div class="border border-border rounded-lg p-4 text-center">
-              <p class="text-2xl font-bold">{m.value}</p>
+              <p class="text-xl font-bold">{m.value}</p>
               <p class="text-xs text-muted-foreground mt-1">{m.label}</p>
             </div>
           ))}
