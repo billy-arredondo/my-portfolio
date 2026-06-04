@@ -7,6 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://billyarredondo.dev',
+  base: '/my-portfolio',
   output: 'static',
   integrations: [
     react(),
