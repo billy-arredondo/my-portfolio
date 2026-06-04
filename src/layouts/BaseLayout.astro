@@ -28,7 +28,10 @@ const {
 } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
-const path = Astro.url.pathname;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = base && Astro.url.pathname.startsWith(base)
+  ? Astro.url.pathname.slice(base.length) || '/'
+  : Astro.url.pathname;
 ---
 
 <!doctype html>

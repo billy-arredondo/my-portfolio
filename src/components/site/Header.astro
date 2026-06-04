@@ -16,7 +16,11 @@ const navLinks = [
   { href: localizedPath(lang, "/contact"), label: t("nav.contact") },
 ];
 
-const pathWithoutLang = Astro.url.pathname.replace(/^\/(es)/, "") || "/";
+const basePrefix = import.meta.env.BASE_URL.replace(/\/$/, '');
+const rawPathname = basePrefix && Astro.url.pathname.startsWith(basePrefix)
+  ? Astro.url.pathname.slice(basePrefix.length) || '/'
+  : Astro.url.pathname;
+const pathWithoutLang = rawPathname.replace(/^\/(es)/, "") || "/";
 const langLinks = Object.entries(languages).map(([code, label]) => ({
   code,
   label: label as string,
